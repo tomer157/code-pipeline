@@ -1,0 +1,70 @@
+
+pipeline:
+  # List of products to be deployed in the pipeline
+  # Based on Product class and features
+  products:
+    - name: "Product1"  
+      scheduled_time: "2024-12-16T08:00:00" 
+      actions:  # Actions to perform for this product
+        - build:  
+            type: "build_tool" 
+            version: "1.0.0" 
+        - deploy:  
+            targets:
+              - "Artifactory"  # Repository target for deployment
+              - "S3"  # Another repository target for deployment
+        - notify:  # notification channels
+            channels:
+              - "Mail"  # Email notification channel
+              - "Slack"  # Slack notification channel
+            user_groups:
+              - "DevOps"  # List of user groups to notify (e.g., DevOps team)
+              - "Management"  # Another user group (e.g., Management team)
+
+   
+
+# Define the repository targets (where to deploy the products)
+repository_targets:
+  # Artifactory configuration
+  Artifactory:
+    url: "https://artifactory.com"  # URL of the Artifactory repository
+    authentication:
+      username: "user"  # Username for authentication
+      password: "password"  # Password for authentication
+
+  # Nexus repository configuration
+  Nexus:
+    url: "https://nexus.example.com"  # URL of the Nexus repository
+    authentication:
+      username: "user"  # Username for authentication
+      password: "password"  # Password for authentication
+
+  # S3 bucket configuration for AWS deployment
+  S3:
+    bucket: "product-delivery-bucket"  # S3 bucket name
+    region: "us-east-1"  # AWS region where the bucket is located
+
+# Define the notification channels for notifications
+notification_channels:
+  Mail:
+    smtp_server: "smtp.example.com"  
+    port: 587  
+    from_address: "no-reply@example.com"  
+
+  Slack:
+    webhook_url: "https://hooks.slack.com/services/xxxx/yyyy/zzzz"  # Slack webhook URL to send messages
+
+
+# Define the build tool configurations
+build_tools:
+  build_tool:
+    command: "build --version {version}"  # Command to execute for building the product
+    dependencies:  # List of dependencies required by the build tool
+      - "dependency1"
+      - "dependency2"
+
+  # Docker build tool configuration
+  docker_build:
+    command: "docker build --tag {version}"  # Docker build command to run
+    dependencies:
+      - "docker"  # Docker dependency

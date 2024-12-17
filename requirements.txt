@@ -1,0 +1,7 @@
+
+boto3==1.26.26           
+slack_sdk==3.18.2         
+smtplib==3.10             
+schedule==1.1.0           # Python job scheduling library (e.g., cron-like scheduling)
+requests==2.28.2          # Library to interact with web APIs
+pytz==2023.3              # Timezone handling
